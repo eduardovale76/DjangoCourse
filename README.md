@@ -7,15 +7,17 @@ Link para o curso [Python Pro](https://www.python.pro.br/)
 
 Suportada versao 3 de Python
 
-''' console
+""" console
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements-dev.txt
-'''
+"""
+
 Para conferir qualidade de código:
-'''console
+
+"""console
 flake8
-'''
+"""
 
 Topicos a serem abordados:
 1. Git
