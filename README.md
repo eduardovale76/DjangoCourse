@@ -4,6 +4,7 @@ Módulo para exemplificar construção de projetos python no curso pytools
 Nesse curso é ensinado como contribuir com projetos de codigo aberto
 
 Link para o curso [Python Pro](https://www.python.pro.br/)
+
 [![Updates](https://pyup.io/repos/github/eduardovale76/DjangoCourse/shield.svg)](https://pyup.io/repos/github/eduardovale76/DjangoCourse/)
 [![Python 3](https://pyup.io/repos/github/eduardovale76/DjangoCourse/python-3-shield.svg)](https://pyup.io/repos/github/eduardovale76/DjangoCourse/)
 
