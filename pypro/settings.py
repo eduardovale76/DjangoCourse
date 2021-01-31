@@ -9,9 +9,10 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import os
 from pathlib import Path
-
+from typing import cast
+from decouple import Config, Csv, config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,12 +21,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'g1)8mq)ey*ow-&09o3)c@fm86t+jkl^+9az37eztcqnfilimti'
-
+SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG2', cast=bool)
+# primeiro procura pela variavel de ambiente DEBUG, caso nao encontre buscará no .env. parametro cast transforma a str em boleano.
 
-ALLOWED_HOSTS = ['py-pro-django.herokuapp.com','127.0.0.1']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS',Csv)
+#['py-pro-django.herokuapp.com','127.0.0.1','*']
 
 
 # Application definition
