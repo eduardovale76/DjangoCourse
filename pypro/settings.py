@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG2', cast=bool)
+DEBUG = config('DEBUG', cast=bool)
 # primeiro procura pela variavel de ambiente DEBUG, caso nao encontre buscará no .env. parametro cast transforma a str em boleano.
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS',Csv)
