@@ -131,4 +131,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Para uploud dos arquivos no site
 
 MEDIA_URL = '/media'
-MEDIA_ROOT = os.path.join(BASE_DIR. 'mediafiles') 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles') 
