@@ -29,6 +29,9 @@ DEBUG = config('DEBUG', cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS',Csv)
 #['py-pro-django.herokuapp.com','127.0.0.1','*']
 
+# informa ao django qual modelo de usuario sera utilizado.
+
+AUTH_USER_MODEL = 'base.User'
 
 # Application definition
 
