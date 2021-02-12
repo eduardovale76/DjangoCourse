@@ -79,6 +79,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pypro.wsgi.application'
 
+# Config do Django Debug Tool Bar
+
+INTERNAL_IPS=config('INTERNAL_IPS', cast=Csv(), default='127.0.0.1')
+
+if DEBUG:
+    INSTALLED_APPS.append('debug_toolbar')
+    MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')
+
+def show_toolbar(request):
+    return True
+DEBUG_TOOLBAR_CONFIG = {
+    "SHOW_TOOLBAR_CALLBACK" : show_toolbar,
+}
+
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -159,6 +173,7 @@ if AWS_ACCESS_KEY_ID:
 
     # static assets
     STATICFILES_STORAGE = 's3_folder_storage.s3.StaticStorage'
+    COLLECTFAST_STRATEGY = "collectfast.strategies.boto3.Boto3Strategy"
     STATIC_S3_PATH = 'static'
     STATIC_ROOT = f'/{STATIC_S3_PATH}/'
     STATIC_URL = f'//s3.amazonaws.com/{AWS_STORAGE_BUCKET_NAME}/{STATIC_S3_PATH}/'
