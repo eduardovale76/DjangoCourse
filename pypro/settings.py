@@ -13,6 +13,8 @@ import os
 from pathlib import Path
 from typing import cast
 from decouple import config, Csv
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,10 +26,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', cast=bool)
+DEBUG = config('DEBUG', default=True, cast=bool)
 # primeiro procura pela variavel de ambiente DEBUG, caso nao encontre buscará no .env. parametro cast transforma a str em boleano.
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS',Csv)
+ALLOWED_HOSTS = config('ALLOWED_HOSTS',cast=Csv())
 #['py-pro-django.herokuapp.com','127.0.0.1','*']
 
 # informa ao django qual modelo de usuario sera utilizado.
@@ -174,10 +176,8 @@ if AWS_ACCESS_KEY_ID:
     STATIC_URL = f'//s3.amazonaws.com/{AWS_STORAGE_BUCKET_NAME}/{STATIC_S3_PATH}/'
     ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 
-    # Upload Media Folder
-    DEFAULT_FILE_STORAGE = 's3_folder_storage.s3.DefaultStorage'
-    DEFAULT_S3_PATH = 'media'
-    MEDIA_ROOT = f'/{DEFAULT_S3_PATH}/'
+    # Upload Media Folderimport sentry_sdk
+
     MEDIA_URL = f'//s3.amazonaws.com/{AWS_STORAGE_BUCKET_NAME}/{{DEFAULT_S3_PATH}}/'
 
     INSTALLED_APPS.append('s3_folder_storage')
