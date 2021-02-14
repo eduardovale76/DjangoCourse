@@ -38,7 +38,7 @@ AUTH_USER_MODEL = 'base.User'
 
 # Application definition
 
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+#STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 COLLECTFAST_STRATEGY = 'collectfast.strategies.boto3.Boto3Strategy'
 
 INSTALLED_APPS = [
@@ -175,9 +175,11 @@ if AWS_ACCESS_KEY_ID:
     STATIC_ROOT = f'/{STATIC_S3_PATH}/'
     STATIC_URL = f'//s3.amazonaws.com/{AWS_STORAGE_BUCKET_NAME}/{STATIC_S3_PATH}/'
     ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
-
-    # Upload Media Folderimport sentry_sdk
-
+  
+    # Upload Media Folder
+    DEFAULT_FILE_STORAGE = 's3_folder_storage.s3.DefaultStorage'
+    DEFAULT_S3_PATH = 'media'
+    MEDIA_ROOT = f'/{DEFAULT_S3_PATH}/'
     MEDIA_URL = f'//s3.amazonaws.com/{AWS_STORAGE_BUCKET_NAME}/{{DEFAULT_S3_PATH}}/'
 
     INSTALLED_APPS.append('s3_folder_storage')
@@ -185,7 +187,7 @@ if AWS_ACCESS_KEY_ID:
 
 ## Configuração do SENTRY
 
-SENTRY_DNS= config('SENTRY_DNS', default=None)
+    SENTRY_DNS= config('SENTRY_DNS', default=None)
 
-if SENTRY_DNS:
-    sentry_sdk.init(dsn = SENTRY_DNS,integrations = [DjangoIntegration()],traces_sample_rate = 1.0, send_default_pii = True)
+    if SENTRY_DNS:
+         sentry_sdk.init(dsn = SENTRY_DNS,integrations = [DjangoIntegration()],traces_sample_rate = 1.0, send_default_pii = True)
