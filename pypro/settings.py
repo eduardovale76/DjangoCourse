@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 from typing import cast
-from decouple import Config, Csv, config
+from decouple import config, Csv
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -81,17 +82,11 @@ WSGI_APPLICATION = 'pypro.wsgi.application'
 
 # Config do Django Debug Tool Bar
 
-INTERNAL_IPS=config('INTERNAL_IPS', cast=Csv(), default='127.0.0.1')
+INTERNAL_IPS = config('INTERNAL_IPS', cast=Csv(), default='127.0.0.1')
 
 if DEBUG:
     INSTALLED_APPS.append('debug_toolbar')
     MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')
-
-def show_toolbar(request):
-    return True
-DEBUG_TOOLBAR_CONFIG = {
-    "SHOW_TOOLBAR_CALLBACK" : show_toolbar,
-}
 
 
 # Database
@@ -151,7 +146,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Para uploud dos arquivos no site
 
-MEDIA_URL = '/media'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles') 
 
 COLLECTFAST_ENABLED = False
@@ -188,3 +183,9 @@ if AWS_ACCESS_KEY_ID:
     INSTALLED_APPS.append('s3_folder_storage')
     INSTALLED_APPS.append('storages')
 
+## Configuração do SENTRY
+
+SENTRY_DNS= config('SENTRY_DNS', default=None)
+
+if SENTRY_DNS:
+    sentry_sdk.init(dsn = SENTRY_DNS,integrations = [DjangoIntegration()],traces_sample_rate = 1.0, send_default_pii = True)
