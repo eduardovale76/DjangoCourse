@@ -11,12 +11,15 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
+import dj_database_url 
+from functools import partial
+
 from typing import cast
 from decouple import config, Csv
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Build paths inside tes the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -24,13 +27,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = config('SECRET_KEY', default=None)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
-# primeiro procura pela variavel de ambiente DEBUG, caso nao encontre buscará no .env. parametro cast transforma a str em boleano.
+# first procura pela variavel de ambiente DEBUG, caso nao encontre buscará no
+# .env. parametro cast transforma a str em boleano.
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS',cast=Csv())
-#['py-pro-django.herokuapp.com','127.0.0.1','*']
+# ['py-pro-django.herokuapp.com','127.0.0.1','*']
 
 # informa ao django qual modelo de usuario sera utilizado.
 
@@ -38,7 +42,7 @@ AUTH_USER_MODEL = 'base.User'
 
 # Application definition
 
-#STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 COLLECTFAST_STRATEGY = 'collectfast.strategies.boto3.Boto3Strategy'
 
 INSTALLED_APPS = [
@@ -94,8 +98,7 @@ if DEBUG:
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-import dj_database_url 
-from functools import partial
+
 
 default_db_url = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
 parse_database = partial(dj_database_url.parse, conn_max_age=600)
@@ -185,9 +188,14 @@ if AWS_ACCESS_KEY_ID:
     INSTALLED_APPS.append('s3_folder_storage')
     INSTALLED_APPS.append('storages')
 
-## Configuração do SENTRY
+# configuracao do SENTRY
 
-    SENTRY_DNS= config('SENTRY_DNS', default=None)
+SENTRY_DNS=config('SENTRY_DNS', default=None)
 
-    if SENTRY_DNS:
-         sentry_sdk.init(dsn = SENTRY_DNS,integrations = [DjangoIntegration()],traces_sample_rate = 1.0, send_default_pii = True)
+if SENTRY_DNS:      
+    sentry_sdk.init(dsn=SENTRY_DNS,integrations=[DjangoIntegration()],
+    traces_sample_rate=1.0,
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True
+    )
