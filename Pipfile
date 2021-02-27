@@ -4,7 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-Django = "==3.1.5"
 gunicorn = "*"
 pytest-django = "*"
 flake8 = "==3.8.4"
@@ -45,11 +44,13 @@ webencodings = "==0.5.1"
 pytest = "~=6.2.2"
 Pillow = "*"
 CacheControl = "==0.12.6"
+django = "*"
 
 [dev-packages]
 flake8 = "*"
 pytest-cov = "*"
 codecov = "*"
+pytest = "*"
 
 [requires]
 python_version = "3.8"

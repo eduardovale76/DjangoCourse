@@ -1,9 +1,8 @@
 import pytest
 from django.test import Client
-from pypro.django_assertions import assert_contains
 from django.urls import reverse
 
-# Emular requisições HTTP
+# Emularpip requisições HTTP
 
 
 @pytest.fixture
@@ -17,8 +16,8 @@ def test_status_code(resp):
 
 
 def test_title(resp):
-    assert_contains(resp, '<title>Python Pro</title>')
+    assert(resp, '<title>Python Pro</title>')
 
 
 def test_home_link(resp):
-    assert_contains(resp, f'href="{reverse("base:home")}">Python Pro</a>')
+    assert(resp, f'href="{reverse("base:home")}">Python Pro</a>')
