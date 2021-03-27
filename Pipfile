@@ -45,12 +45,15 @@ pytest = "~=6.2.2"
 Pillow = "*"
 CacheControl = "==0.12.6"
 django = "*"
+model-mommy = "*"
 
 [dev-packages]
 flake8 = "*"
 pytest-cov = "*"
 codecov = "*"
 pytest = "*"
+model-mommy = "*"
+model-bakery = "*"
 
 [requires]
 python_version = "3.8"
